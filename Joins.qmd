@@ -1,0 +1,99 @@
+---
+title: "Joins"
+author: "Celia Evans, PhD"
+date: "March 20, 2023"
+editor: visual
+format:
+    html:
+      code-fold: true
+---
+
+## Loading Packages
+
+```{r}
+library(tidyverse)
+
+```
+
+## Make example dataframes
+
+```{r}
+name <- c("Alice","Bob", "Angharad","Rhys")
+age <- c(23,31,25,32)
+gender <- c("F","TM","NB","M")
+income_range <- c("30-50K","50-75K","30-50K","100-125K")
+
+report_2022 <- tibble(name,age,gender,income_range)
+
+report_2022
+
+```
+
+```{r}
+name <- c("Alice","Bob","Sally", "Angharad")
+age <- c(23,31,41,25)
+gender <- c("F","TM","TF","NB")
+income_range <- c("50-75K","50-75K","75-100K","30-50K")
+
+report_2023 <- tibble(name,age,gender,income_range)
+
+report_2023
+```
+
+```{r}
+income_range <- c("20-30K","30-50K","50-75K","75-100K","100-125K","125-150K")
+marginal_tax_rate <- c(0.10,0.11, 0.12, 0.15,0.20,0.21)
+
+rate_table <- tibble(income_range, marginal_tax_rate)
+
+rate_table
+```
+
+## Keys Primary and Foreign
+
+A **primary key** is a variable in a data frame that uniquely identifies an observation, e.g. name, SSN, Serial Number, etc.
+
+A **foreign key** is a variable in a data frame that is the primary key in another data frame.
+
+#### Exercise 1:
+
+Identify the primary and foreign keys of the above dataframes.
+
+### Left and Right Join
+
+Think of two data frames, one we will call the **left** dataframe, the other the **right** dataframe.
+
+An **leftjoin is a method of combining information from two data frames based on keys.**
+
+```{r}
+left_join(report_2022,report_2023, by="name")
+
+```
+
+```{r}
+right_join(report_2022,report_2023, by="name")
+```
+
+### Exercise 2
+
+What is the difference between the left join and the right join in the above two examples.
+
+### Inner and full joins
+
+An inner join only retains rows that occur in both data sets. A full join can also be called an "outer join"
+
+```{r}
+inner_join(report_2022,report_2023,by="name")
+```
+
+On the other hand:
+
+```{r}
+full_join(report_2022, report_2023, by="name")
+```
+
+### Exercise 3
+
+a\. What is the difference between the inner join and the out join as seen before.
+
+b\. What is the tax rate for each person in 2023? Create a dataframe giving only the name and tax rate for each person in 2023.
